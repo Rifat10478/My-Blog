@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>My Posts</h2>
+
+<div class="row">
+{% for post in posts %}
+  <div class="col-md-4 mb-3">
+    <div class="card p-2">
+        <h5>{{ post.title }}</h5>
+        <img src="{{ post.image.url }}" class="img-fluid">
+        <p>{{ post.content|truncatewords:10 }}</p>
+
+        <a href="{% url 'edit_post' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+        <a href="{% url 'delete_post' post.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

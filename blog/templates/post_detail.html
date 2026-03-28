@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex align-items-center mb-2">
+            <img src="{{ post.user.profile.image.url }}" class="rounded-circle me-2" width="50" height="50">
+            <strong>{{ post.user.username }}</strong>
+        </div>
+        <h3>{{ post.title }}</h3>
+        <img src="{{ post.image.url }}" class="img-fluid my-3">
+        <p>{{ post.content }}</p>
+        <hr>
+
+        <h4>Comments</h4>
+
+        <form method="POST" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+            <input type="text" name="text" class="form-control" placeholder="Write comment">
+            <button class="btn btn-primary mt-2">Comment</button>
+        </form>
+
+        <hr>
+
+        {% for comment in post.comment_set.all %}
+        <p><b>{{ comment.user.username }}</b>: {{ comment.text }}</p>
+        {% endfor %}
+        <h4>Reactions</h4>
+
+        <form method="POST" action="{% url 'react_post' post.id %}">
+            {% csrf_token %}
+            <button name="emoji" value="👍" class="btn btn-light">👍</button>
+            <button name="emoji" value="❤️" class="btn btn-light">❤️</button>
+            <button name="emoji" value="😂" class="btn btn-light">😂</button>
+        </form>
+
+        <p>{{ post.total_likes }}</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Stories</h2>
+
+<div class="d-flex overflow-auto mb-4">
+  {% for story in stories %}
+  <div class="me-3 text-center">
+      {% if story.image %}
+      <img src="{{ story.image.url }}" class="rounded-circle" width="80" height="80">
+      {% endif %}
+      {% if story.video %}
+      <video width="120" controls>
+          <source src="{{ story.video.url }}">
+      </video>
+      {% endif %}
+      <p class="small">{{ story.user.username }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
